@@ -1,29 +1,25 @@
-import java.lang.Math;
 import java.util.Random;
 
 public class RimuoviProdottiThread extends Thread {
-    private int q;
+    private Random random;
     Magazzino magazzino;
     public RimuoviProdottiThread(Magazzino magazzino) {
         this.magazzino = magazzino;
+        this.random = new Random();
     }
 
     @Override
     public void run() {
-        while(true)
-        {
-            q = new Random().nextInt(magazzino.getNumProdotti());
-            System.out.println("provo ad rimuovere> "+q);
-            while(!magazzino.removeProdotto(q));
-            System.out.println("rimosso");
-
+        while (true) {
+            int quantita = random.nextInt(5) + 1; // Genera un numero casuale da 1 a 5
             try {
-                Thread.sleep(new Random().nextInt(1000));
+                magazzino.removeProdotto(quantita);
+                System.out.println("Rimossi " + quantita + " prodotti dal magazzino.");
+                Thread.sleep(1500); // Attendiamo 1.5 secondi prima di rimuovere nuovi prodotti
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
-
     }
 }
 

@@ -1,5 +1,3 @@
-import java.util.Random;
-
 public class StampaNumProdottiThread extends Thread {
     Magazzino magazzino;
     public StampaNumProdottiThread(Magazzino magazzino) {
@@ -8,12 +6,12 @@ public class StampaNumProdottiThread extends Thread {
 
     @Override
     public void run() {
-        while(true) {
-            System.out.println(magazzino);
+        while (true) {
+            System.out.println("Numero attuale di prodotti nel magazzino: " + magazzino.getNumProdotti());
             try {
-                Thread.sleep(new Random().nextInt(1000));
+                Thread.sleep(2000); // Stampiamo il numero di prodotti ogni 2 secondi
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }

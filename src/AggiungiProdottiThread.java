@@ -1,27 +1,23 @@
 import java.util.Random;
-import java.util.random.*;
-
 public class AggiungiProdottiThread extends Thread {
-    private int q;
+    private Random random;
     Magazzino magazzino;
     public AggiungiProdottiThread(Magazzino magazzino) {
         this.magazzino = magazzino;
+        this.random = new Random();
     }
 
     @Override
     public void run() {
-        while(true)
-        {
-            q = new Random().nextInt(magazzino.capienza);
-            System.out.println("provo ad aggiungere> "+q);
-            while(!magazzino.addProdotto(q));
-            System.out.println("aggiunto");
+        while (true) {
+            int quantita = random.nextInt(10) + 1; // Genera un numero casuale da 1 a 10
             try {
-                Thread.sleep(new Random().nextInt(1000));
+                magazzino.addProdotto(quantita);
+                System.out.println("Aggiunti " + quantita + " prodotti al magazzino.");
+                Thread.sleep(1000); // Attendiamo 1 secondo prima di aggiungere nuovi prodotti
             } catch (InterruptedException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
-
     }
 }
